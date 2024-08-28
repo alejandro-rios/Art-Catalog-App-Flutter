@@ -2,6 +2,7 @@ import 'package:art_catalog_app/domain/models/artwork_detail.dart';
 import 'package:art_catalog_app/ui/colors.dart';
 import 'package:art_catalog_app/ui/widgets/expandable_text_widget.dart';
 import 'package:art_catalog_app/ui/widgets/spacers.dart';
+import 'package:art_catalog_app/ui/widgets/zoomable_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class ArtworkDetailView extends StatelessWidget {
@@ -18,12 +19,15 @@ class ArtworkDetailView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FadeInImage(
-            image: NetworkImage(artworkDetail.imageUrl!),
-            placeholder: const AssetImage('lib/assets/placeholder.png'),
-            imageErrorBuilder: (_, __, ___) => Image.asset('lib/assets/no_image.png'),
-            height: 400,
-            fit: BoxFit.fitHeight,
+          ZoomableImageWidget(
+            image: FadeInImage(
+              image: NetworkImage(artworkDetail.imageUrl!),
+              placeholder: const AssetImage('lib/assets/placeholder.png'),
+              imageErrorBuilder: (_, __, ___) => Image.asset('lib/assets/no_image.png'),
+              height: 400,
+              fit: BoxFit.fitHeight,
+            ),
+            hideStatusBarWhileZooming: true,
           ),
           const VerticalSpacer(16),
           Text(artworkDetail.title, maxLines: 2, style: const TextStyle(fontSize: 24)),
